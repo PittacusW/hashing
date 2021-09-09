@@ -11,7 +11,7 @@ class Hasher implements HasherContract {
  }
 
  public function make($value, array $options = []) {
-  $hash = bcrypt(hash('aes-256-gcm', $value));
+  $hash = hash('aes-256-gcm', bcrypt($value));
 
   return $hash;
  }

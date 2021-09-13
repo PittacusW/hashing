@@ -2,6 +2,7 @@
 
 namespace PittacusW\Hashing;
 
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 
 class Hasher implements HasherContract {
@@ -11,7 +12,7 @@ class Hasher implements HasherContract {
  }
 
  public function make($value, array $options = []) {
-  $hash = hash('aes-256-gcm', bcrypt($value));
+  $hash = Crypt::encryptString(bcrypt($value));
 
   return $hash;
  }
@@ -21,7 +22,7 @@ class Hasher implements HasherContract {
    return FALSE;
   }
 
-  return $hashedValue === md5($value);
+  return Crypt::decryptString($hashedValue) === bcrypt($value);
  }
 
  public function needsRehash($hashedValue, array $options = []) {

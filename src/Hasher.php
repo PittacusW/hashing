@@ -12,7 +12,7 @@ class Hasher implements HasherContract {
  }
 
  public function make($value, array $options = []) {
-  $hash = Crypt::encryptString(bcrypt($value));
+  $hash = Crypt::encryptString(hash('sha512', $value));
 
   return $hash;
  }
@@ -22,7 +22,7 @@ class Hasher implements HasherContract {
    return FALSE;
   }
 
-  return Crypt::decryptString($hashedValue) === bcrypt($value);
+  return Crypt::decryptString($hashedValue) === hash('sha512', $value);
  }
 
  public function needsRehash($hashedValue, array $options = []) {
